@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+	  
+	  <script>
+	  $(document).bind('pageshow',function(){
+        
+           
+           adjustWindowheight($('.content')); //#editDiv is the id of the CONTENT part
+        });
+
+        adjustWindowheight = function (current_page_content) {
+            //Check whether its WP7
+            var isWp7 = window.navigator.userAgent.indexOf("IEMobile/9.0") != -1;
+            current_page_content.each(function () {
+                var containerHeight = parseInt($(this).css('height'));
+                var windowHeight = parseInt(window.innerHeight);
+
+                if (containerHeight + 118 < windowHeight) {
+                    var newHeight = windowHeight - 118;
+                    if (isWp7) {
+                        //offset the page since WP7 wrongly reports page height
+                        $(this).css('min-height', newHeight + 30 + 'px');
+                    }
+                    else {
+                        $(this).css('min-height', newHeight + 'px');
+                    }
+                }
+                else {
+                    $(this).css('min-height', windowHeight + 'px');
+                }
+
+            });
+        }
+		</script>
+   </head>
+   <body>
+      <div id="player-page" data-role="page">
+         <header data-role="header">
+            <a href="#" data-icon="back" data-iconpos="notext" data-rel="back" title="Go back">Back</a>
+            <h1>Player</h1>
+         </header>
+         <div class="content" data-role="content">
+            <div id="player">
+               <div id="media-info">
+                  <p><span id="media-name"></span></p>
+                  <p class="hidden">Located at <span id="media-path"></span></p>
+                  <div class="clearfix">
+                    <div class="clearfix">
+					<label class="lfloat" id="media-played">-</label><label class="rfloat" id="media-duration">-</label>
+					</div>
+                     <input type="range" name="time-slider" id="time-slider" value="0" min="0" max="100" data-highlight="true" />
+                  </div>
+               </div>
+               <a href="#" id="player-play" title="Play / Pause"></a>
+               <a href="#" id="player-stop" title="Stop"></a>
+            </div>
+         </div>
+         <footer data-role="footer" data-position="fixed">
+            <h3 id="copyright-title">Created by <i>MAIT</i></h3>
+            <a id="credits-button" href="#" data-icon="info" data-iconpos="notext" class="ui-btn-right">Credits</a>
+         </footer>
+      </div>
+   </body>
+</html>
